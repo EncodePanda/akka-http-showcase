@@ -5,9 +5,9 @@ case object Flying extends Power
 case object ShootinFire extends Power
 
 
-case class SuperHero(name: String) 
+case class SuperHero(id: String, name: String) 
 
 
 object PowerPlan {
-  def enter(thinkingAbout: String) = SuperHero(s"${thinkingAbout}er Man")
+  def enter(id: String)(thinkingAbout: String) = SuperHero(id, s"${thinkingAbout}er Man")
 }
