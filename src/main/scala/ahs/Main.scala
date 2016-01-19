@@ -18,9 +18,6 @@ object Main extends App with Protocol {
 
   var heros: Map[Long, SuperHero] = Map(1L -> PowerPlan.enter(1)("Fish"))
 
-  def insertHero(hero: SuperHero) = {
-
-  }
   val route =
 
     pathSingleSlash {
