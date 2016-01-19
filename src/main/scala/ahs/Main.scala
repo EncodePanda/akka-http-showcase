@@ -47,7 +47,7 @@ object Main extends App with Protocol {
           } ~
           delete {
             heros = heros - id
-            complete("deleted hero id = ${id}")
+            complete(s"deleted hero id = ${id}")
           }
         }
       }
