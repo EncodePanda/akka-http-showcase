@@ -4,10 +4,8 @@ sealed trait Power
 case object Flying extends Power
 case object ShootinFire extends Power
 
-
-case class SuperHero(id: String, name: String) 
-
+case class SuperHero(id: Long, name: String) 
 
 object PowerPlan {
-  def enter(id: String)(thinkingAbout: String) = SuperHero(id, s"${thinkingAbout}er Man")
+  def enter(id: Long)(thinkingAbout: String) = SuperHero(id, s"${thinkingAbout}er Man")
 }

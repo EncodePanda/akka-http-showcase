@@ -16,10 +16,10 @@ object Main extends App with Protocol {
   implicit val system = ActorSystem()
   implicit val actorMaterializer = ActorMaterializer()
 
-  var heros: Map[String, SuperHero] = Map("1" -> PowerPlan.enter("1")("Fish"))
+  var heros: Map[Long, SuperHero] = Map(1L -> PowerPlan.enter(1)("Fish"))
 
   def insertHero(hero: SuperHero) = {
-    heros = heros + (hero.id -> hero)
+
   }
   val route =
 
@@ -30,18 +30,29 @@ object Main extends App with Protocol {
         }
       }
     } ~
-      path("superhero") {
-        get {
-          complete {
-            heros
-          }
-        } ~
-          put {
-            entity(as[SuperHero]) { hero =>
-              insertHero(hero)
-              complete(s"got ${hero.name}")
+      pathPrefix("superhero") {
+        pathEndOrSingleSlash {
+          get {
+            complete {
+              heros.values.toList
             }
+          } ~
+            put {
+              entity(as[SuperHero]) { hero =>
+                heros = heros + (hero.id -> hero)                
+                complete(s"got ${hero.name}")
+              }
+            }
+        } ~
+        path(LongNumber) { id =>
+          get {
+            complete(heros(id))
+          } ~
+          delete {
+            heros = heros - id
+            complete("deleted hero id = ${id}")
           }
+        }
       }
 
   Http().bindAndHandle(route, "localhost", 8080)
